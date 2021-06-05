@@ -1,0 +1,23 @@
+name: React CI demo
+
+on:
+  push:
+    branches:[master]
+
+jobs:
+  ci build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version:[12,14]
+    
+    steps:
+      -uses: actions/checkout@master
+      -name: Use Node.js ${{matrix.node-version}}
+       uses: action/setup-node@master
+       with:
+        node-version ${{matrix.node-version}}
+      -run: npm ci
+      -run: npm run build
+      -run: npm test
